@@ -1,4 +1,4 @@
-# Contrastive Graph Learning under Missing Node Attributes with Reliability-Aware Fusion
+# Contrastive Graph Learning Under Structured Missingness: A Reliability-Aware Approach
 Attributes with Reliability-Aware Fusion
 
 
