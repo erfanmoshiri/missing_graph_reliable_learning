@@ -1,5 +1,8 @@
 # Contrastive Graph Learning with Missing Features
 
+
+<img width="1534" height="622" alt="Image" src="https://github.com/user-attachments/assets/b4977197-de18-41d9-9ec4-00fbd7595c70" />
+
 A graph neural network that learns robust node representations when features are missing.
 
 ## What It Does
@@ -48,12 +51,4 @@ Cora, CiteSeer, PubMed, Amazon Computers, Amazon Photo
 4. **Learn** by aligning the two views with reliability-weighted Barlow Twins
 5. **Classify** from learned representations
 
-## Citation
 
-```bibtex
-@article{yourpaper2024,
-  title={Contrastive Graph Learning under Missing Node Attributes with Reliability-Aware Fusion},
-  author={Your Name},
-  year={2024}
-}
-```
