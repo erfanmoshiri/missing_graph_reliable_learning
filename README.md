@@ -1,33 +1,59 @@
-# Contrastive Graph Learning Under Structured Missingness: A Reliability-Aware Approach
-Attributes with Reliability-Aware Fusion
+# Contrastive Graph Learning with Missing Features
 
+A graph neural network that learns robust node representations when features are missing.
 
+## What It Does
 
-This repository contains the implementation for **Contrastive Multi-Relational Graph Learning** — a model proposed in the paper:
+Standard GNNs fail when node features are missing. This model:
+- Handles **structured missingness** (50% missing features)
+- Uses **two graph views**: base graph + PPR diffusion graph
+- Weights learning by **node reliability** (how much data each node has)
+- Learns with **contrastive loss** (Barlow Twins) instead of requiring labels
 
-> **Contrastive Graph Learning under Missing Node Attributes with Reliability-Aware Fusion**  
+## Quick Start
 
-# Contrastive Graph Learning under Missing Attributes with Reliability-Aware Fusion
+```bash
+# Install dependencies (with your venv activated)
+pip install -r requirements.txt
 
-## Overview
-This repository contains the code for our paper on learning graph representations when node attributes are missing. Instead of relying on imputation first, the method learns robust node embeddings directly from incomplete data and uses reliability-aware fusion to combine multiple graph views. :contentReference[oaicite:0]{index=0} :contentReference[oaicite:1]{index=1}
+# Train on Cora dataset with 50% missing features
+python train.py --dataset cora --miss_ratio 0.5 --miss_mechanism mcar --epochs 500
 
-## Problem
-Missing node attributes are common in real-world graphs and can hurt both representation learning and downstream tasks. This is especially important in property data, where missingness is often structured rather than fully random. Existing graph contrastive methods often use stochastic augmentations or simple fusion, which can be weak under attribute missingness. :contentReference[oaicite:2]{index=2} :contentReference[oaicite:3]{index=3}
-
-## Key Components
-- Base graph plus a auxiliary relation graphs
-- Relation-specific graph encoders
-- Reliability-aware node-wise fusion
-- Self-supervised training with Barlow Twins
+# Try different missingness patterns
+python train.py --dataset cora --miss_ratio 0.5 --miss_mechanism mar --miss_variant degree
+python train.py --dataset cora --miss_ratio 0.5 --miss_mechanism mnar --miss_variant frequency
+```
 
 ## Datasets
-- Cora
-- CiteSeer
-- PubMed
-- Amazon Computers
-- Amazon Photo
-- Australian property dataset for downstream property valuation.
 
-## Summary of Results
-The method consistently improves representation quality and downstream performance under MCAR, MAR, and MNAR missingness settings. On the property valuation task, it outperforms strong baselines across benchmark settings and shows stable gains in ablation studies.
+Cora, CiteSeer, PubMed, Amazon Computers, Amazon Photo
+
+## Key Parameters
+
+```bash
+--miss_ratio 0.5              # 50% missing (default)
+--miss_mechanism mcar         # mcar, mar, mnar
+--miss_variant degree         # for MAR: degree, observation
+                              # for MNAR: frequency, rare, value
+--beta 1.0                    # contrastive loss weight
+--hidden_dim 128              # model size
+--epochs 500                  # training iterations
+```
+
+## How It Works
+
+1. **Impute** missing values with mask-aware KNN (only uses shared observed features)
+2. **Encode** missingness pattern (which features are missing matters)
+3. **Two views**: original graph + PPR global view
+4. **Learn** by aligning the two views with reliability-weighted Barlow Twins
+5. **Classify** from learned representations
+
+## Citation
+
+```bibtex
+@article{yourpaper2024,
+  title={Contrastive Graph Learning under Missing Node Attributes with Reliability-Aware Fusion},
+  author={Your Name},
+  year={2024}
+}
+```

@@ -27,9 +27,7 @@ cora/
 artifacts/
 
 
-venv2/
-venv10
-venv/
+.venv/
 
 gat/
 property_data_correction/
@@ -40,3 +38,8 @@ data_generator.py
 figures
 
 .env_claude
+
+QUICKSTART.md
+data
+cache
+.claude
